@@ -6,8 +6,6 @@ import cathappy from './img/cathappy.svg';
 import { Link, useNavigate} from 'react-router-dom';
 
 
-
-
 function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -86,7 +84,7 @@ function Signup() {
         });
         let data = await res.json();
         alert("Registered successfully");
-        navigate('/login');
+        navigate('./login');
       } catch (error) {
         console.error('Error registering user:', error);
        

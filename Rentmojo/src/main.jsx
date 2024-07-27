@@ -12,9 +12,9 @@ const rootElement = document.getElementById('root');
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <ChakraProvider>
-      <BrowserRouter>
-      <App />
-      </BrowserRouter>
+    <BrowserRouter>
+    <App />
+    </BrowserRouter>
     </ChakraProvider>
   </React.StrictMode>
 );

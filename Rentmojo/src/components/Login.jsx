@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './LoginSignup.css';
+// import './LoginSignup.css';
 import cathappy from './img/cathappy.svg'; 
 import { useNavigate } from 'react-router-dom';
 
@@ -89,7 +89,7 @@ function Login() {
             </div>
             <button type="submit">Continue</button>
           </form>
-          <p>Don't have an account? <a href="/signup">Create one</a></p>
+          <p>Don't have an account? <a href="./Signup">Create one</a></p>
         </div>
       </div>
     </div>
