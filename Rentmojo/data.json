@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "id": "1721890424208.599",
+      "name": "wahid",
+      "email": "wahid@khan",
+      "phnno": "545544454545455",
+      "password": "wahiffgfgfg"
+    },
+    {
+      "id": "1721890571887.8223",
+      "name": "abc",
+      "email": "abc@abc",
+      "phnno": "778879799956",
+      "password": "123654789"
+    },
+    {
+      "id": "1721936283477.0823",
+      "name": "niranjan",
+      "email": "niru@gmail.com",
+      "phnno": "78965412305",
+      "password": "wahidkhan"
+    }
+  ]
+}
