@@ -1,17 +1,19 @@
-<<<<<<< HEAD
+// <<<<<<< HEAD
 import React from 'react'
-import { useState } from 'react'
+// import { useState } from 'react'
+// // import {  Route, Routes, useLocation,Link } from 'react-router-dom';
 
 
 
-function App() {
+
+// function App() {
  
 
-  return (
-    <>
+//   return (
+//     <>
       
-    </>
-=======
+//     </>
+// =======
 // import { useState } from 'react'
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -35,7 +37,7 @@ function App() {
       <Footer/>
     </div>
     </ChakraProvider>
->>>>>>> 01df56ba2ba8aa81fc2594337d10ca2f736addf7
+// >>>>>>> 01df56ba2ba8aa81fc2594337d10ca2f736addf7
   )
 }
 

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { ChakraProvider } from '@chakra-ui/react';
 import App from './App';
 import './index.css';
+import { BrowserRouter } from 'react-router-dom'
 
 // Create a root element
 const rootElement = document.getElementById('root');
@@ -11,7 +12,9 @@ const rootElement = document.getElementById('root');
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <ChakraProvider>
-      <App />
+    <BrowserRouter>
+    <App />
+    </BrowserRouter>
     </ChakraProvider>
   </React.StrictMode>
 );
