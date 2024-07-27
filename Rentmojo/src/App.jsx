@@ -5,6 +5,7 @@ import Categories from "./components/Categories";
 import Slider from "./components/Slider";
 import Ifooter from "./components/Ifooter";
 import Footer from "./components/Footer";
+// import {  Route, Routes, useLocation,Link } from 'react-router-dom';
 // import AllRoutes from "./Pages/AllRoutes";
 import './App.css'
 import { ChakraProvider } from '@chakra-ui/react';

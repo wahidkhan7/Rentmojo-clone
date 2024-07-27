@@ -7,6 +7,8 @@ import {
   ModalBody,
   ModalCloseButton,
 } from '@chakra-ui/react';
+// import Login from '../Login';
+// import Signup from '../Signup';
 import React, { useState, useEffect } from 'react';
 import {
   Box,
