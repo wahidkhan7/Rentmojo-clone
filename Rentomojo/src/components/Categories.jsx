@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCouch, faTv, faMobileAlt, faBicycle, faDumbbell, faBaby, faBox } from "@fortawesome/free-solid-svg-icons";
 import './Categories.css';
 
+//all items are categorized according to the requided data
 const categories = [
   { name: "Packages", icon: faBox },
   { name: "Furniture", icon: faCouch },
