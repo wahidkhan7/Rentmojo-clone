@@ -32,3 +32,12 @@
   margin-top: 8px;
   /* Adjust spacing between text and button */
 }
+#buy{
+  width: 100%;
+  padding: 8px; 
+  background-color: #EA292D;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 14px; 
+}

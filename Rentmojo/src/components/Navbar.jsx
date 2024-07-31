@@ -174,7 +174,8 @@ const Navbar = ({ cart, removeFromCart }) => {
                     <h3>{item.product.title}</h3>
                     <p>Rent: ₹{item.product.rent}/mo</p>
                     <p>Months: {item.months}</p>
-                    <button onClick={() => removeFromCart(item.product.id)}>Remove</button>
+                    <button onClick={() => removeFromCart(item.product.id)}>Remove</button><br/>
+                    <button id='buy'>Buy</button>
                   </div>
                 </div>
               ))
