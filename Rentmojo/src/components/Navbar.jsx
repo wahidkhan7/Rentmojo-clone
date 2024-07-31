@@ -8,6 +8,9 @@ import {
   useDisclosure,
   useColorModeValue,
   Stack,
+  Input,
+  InputGroup,
+  InputRightElement,
   Menu,
   MenuButton,
   MenuList,
@@ -20,10 +23,8 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Input,
-  InputGroup
 } from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import { HamburgerIcon, CloseIcon, SearchIcon } from '@chakra-ui/icons';
 import { FiShoppingCart } from 'react-icons/fi';
 import { AiOutlineDown } from 'react-icons/ai';
 import logo from '../assets/logo.png';
@@ -31,8 +32,9 @@ import logo2 from '../assets/logo2.svg';
 import Login from './Login';
 import Signup from './Signup';
 import './Navbar.css';
+import './LoginSignup.css';
 
-const Navbar = ({ cart, removeFromCart }) => {
+const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     isOpen: isLoginOpen,
@@ -44,34 +46,41 @@ const Navbar = ({ cart, removeFromCart }) => {
     onOpen: onSignupOpen,
     onClose: onSignupClose,
   } = useDisclosure();
-  const {
-    isOpen: isCartOpen,
-    onOpen: onCartOpen,
-    onClose: onCartClose,
-  } = useDisclosure();
 
+  const [scrollY, setScrollY] = React.useState(0);
   const logoSrc = useBreakpointValue({
-    base: logo2,
-    md: logo,
+    base: logo2, // Small devices
+    md: logo, // Medium and up devices
   });
 
   const buttonSize = useBreakpointValue({
-    base: 'sm',
-    md: 'md',
+    base: 'sm', // Small devices
+    md: 'md', // Medium devices and up
   });
 
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   const openSignupModal = () => {
-    onLoginClose();
-    onSignupOpen();
+    onLoginClose(); // Close login modal if open
+    onSignupOpen(); // Open signup modal
   };
 
   const openLoginModal = () => {
-    onSignupClose();
-    onLoginOpen();
+    onSignupClose(); // Close signup modal if open
+    onLoginOpen(); // Open login modal
   };
 
   return (
-    <>
+    <Box>
       <Box
         position="fixed"
         width="100%"
@@ -80,7 +89,7 @@ const Navbar = ({ cart, removeFromCart }) => {
         textAlign={'center'}
         bg={useColorModeValue('white', 'gray.800')}
         transition="box-shadow 0.2s"
-        boxShadow={window.scrollY > 0 ? 'md' : 'none'}
+        boxShadow={scrollY > 0 ? 'md' : 'none'}
       >
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'} mx="auto" maxW="1200px" px={4}>
           <IconButton
@@ -94,7 +103,12 @@ const Navbar = ({ cart, removeFromCart }) => {
             <Box>
               <img src={logoSrc} alt="Logo" style={{ height: '40px' }} />
             </Box>
-            <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }} alignItems="center">
+            <HStack
+              as={'nav'}
+              spacing={4}
+              display={{ base: 'none', md: 'flex' }}
+              alignItems="center"
+            >
               <Menu>
                 <HStack spacing={2}>
                   <span>Bangalore</span>
@@ -107,14 +121,17 @@ const Navbar = ({ cart, removeFromCart }) => {
                   <MenuItem>Chennai</MenuItem>
                 </MenuList>
               </Menu>
-              <InputGroup width={{ base: '200px', md: '600px' }} mr={4}>
+              <InputGroup width={{ base: '200px', md: '600px' }}>
                 <Input type="text" placeholder="Search for products" />
+                <InputRightElement pointerEvents="none">
+                  <SearchIcon color="gray.300" />
+                </InputRightElement>
               </InputGroup>
             </HStack>
           </HStack>
           <Flex alignItems={'center'}>
-            <Button variant="ghost" leftIcon={<FiShoppingCart />} onClick={onCartOpen}>
-              Cart ({cart.length})
+            <Button variant="ghost" leftIcon={<FiShoppingCart />}>
+              Cart
             </Button>
             <Button
               onClick={onLoginOpen}
@@ -123,6 +140,14 @@ const Navbar = ({ cart, removeFromCart }) => {
               ml={4}
               className="login"
               display={{ base: 'none', md: 'inline-flex' }}
+              sx={{
+                ':hover': {
+                  bg: 'white',
+                  color: 'red.500',
+                  border: '1px solid',
+                  borderColor: 'red.500',
+                },
+              }}
             >
               LOGIN / SIGNUP
             </Button>
@@ -133,7 +158,12 @@ const Navbar = ({ cart, removeFromCart }) => {
           <Box pb={4} display={{ md: 'none' }}>
             <Stack as={'nav'} spacing={4}>
               <Menu>
-                <MenuButton as={Button} width="100%" display="flex" alignItems="center">
+                <MenuButton
+                  as={Button}
+                  width="100%"
+                  display="flex"
+                  alignItems="center"
+                >
                   <span className="loc">Bangalore</span>
                   <IconButton colorScheme="#E2E8F0" icon={<AiOutlineDown />} />
                 </MenuButton>
@@ -146,9 +176,22 @@ const Navbar = ({ cart, removeFromCart }) => {
               </Menu>
               <InputGroup width="100%">
                 <Input type="text" placeholder="Search for products" />
+                <InputRightElement pointerEvents="none">
+                  <SearchIcon color="gray.300" />
+                </InputRightElement>
               </InputGroup>
               <Box>
-                <Button onClick={onLoginOpen} colorScheme="red" size={buttonSize}>
+                <Button
+                  onClick={onLoginOpen}
+                  colorScheme="red"
+                  size={buttonSize}
+                  sx={{
+                    ':hover': {
+                      bg: 'white',
+                      color: 'red.500',
+                    },
+                  }}
+                >
                   LOGIN / SIGNUP
                 </Button>
               </Box>
@@ -157,38 +200,6 @@ const Navbar = ({ cart, removeFromCart }) => {
         ) : null}
       </Box>
 
-      {/* Cart Modal */}
-      <Modal isOpen={isCartOpen} onClose={onCartClose}>
-        <ModalOverlay />
-        <ModalContent id='modalCart' className="cart-modal-content">
-          <ModalHeader>Cart</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody className="modal-body">
-            {cart.length === 0 ? (
-              <p>Your cart is empty.</p>
-            ) : (
-              cart.map((item) => (
-                <div key={item.product.id} className="cart-item">
-                  <img src={item.product.productimage} alt={item.product.title} />
-                  <div>
-                    <h3>{item.product.title}</h3>
-                    <p>Rent: ₹{item.product.rent}/mo</p>
-                    <p>Months: {item.months}</p>
-                    <button onClick={() => removeFromCart(item.product.id)}>Remove</button><br/>
-                    <button id='buy'>Buy</button>
-                  </div>
-                </div>
-              ))
-            )}
-          </ModalBody>
-          <ModalFooter>
-            <Button variant="ghost" onClick={onCartClose}>
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-
       {/* Login Modal */}
       <Modal isOpen={isLoginOpen} onClose={onLoginClose}>
         <ModalOverlay />
@@ -196,10 +207,9 @@ const Navbar = ({ cart, removeFromCart }) => {
           <ModalHeader>Login</ModalHeader>
           <ModalCloseButton />
           <ModalBody className="modal-body">
-            <Login onClose={onLoginClose} />
+            <Login onClose={onLoginClose} /> {/* Pass onClose as a prop */}
             <p>Don't have an account? 
-              <Button colorScheme='blue' variant={'link'} onClick={openSignupModal}>Create one</Button>
-            </p>
+              <Button colorScheme='blue' variant={'link'} onClick={openSignupModal}>Create one</Button></p>
           </ModalBody>
           <ModalFooter>
             <Button variant="ghost" onClick={onLoginClose}>
@@ -216,10 +226,14 @@ const Navbar = ({ cart, removeFromCart }) => {
           <ModalHeader>Sign Up</ModalHeader>
           <ModalCloseButton />
           <ModalBody className="modal-body">
-            <Signup onClose={onSignupClose} />
-            <p>Already have an account? 
-              <Button colorScheme='blue' variant={'link'} onClick={openLoginModal}>Login</Button>
-            </p>
+            <Signup 
+              onClose={() => {
+                onSignupClose(); // Close the signup modal
+                openLoginModal(); // Open the login modal
+              }} 
+            /> {/* Pass a function to handle the modal transition */}
+            <p>Already have an account?
+              <Button colorScheme='blue' variant={'link'} onClick={openLoginModal}>Login</Button></p>
           </ModalBody>
           <ModalFooter>
             <Button variant="ghost" onClick={onSignupClose}>
@@ -228,7 +242,7 @@ const Navbar = ({ cart, removeFromCart }) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </>
+    </Box>
   );
 };
 

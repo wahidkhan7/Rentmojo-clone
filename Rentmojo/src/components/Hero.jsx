@@ -27,7 +27,7 @@ const Hero = () => {
   ];
 
   return (
-    <Box className="hero" >
+    <Box className="hero">
       <Box className="hero-slider">
         <Slider {...settings}>
           {images.map((url, index) => (
