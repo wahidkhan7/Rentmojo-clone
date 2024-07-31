@@ -20,7 +20,7 @@ const Hero = () => {
     fade: true,
    
   };
-
+// data from rento mojo
   const images = [
     "https://s.rmjo.in/Price_drop_HP_Web_july.webp",
     "https://s.rmjo.in/sofa_june_web.webp",
