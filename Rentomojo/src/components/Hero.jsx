@@ -6,6 +6,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './Hero.css';
 
+//in this used react slick
+
 const Hero = () => {
   const settings = {
     dots: true,
