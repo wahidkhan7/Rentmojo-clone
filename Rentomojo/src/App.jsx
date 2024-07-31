@@ -8,6 +8,7 @@ import Ifooter from './components/Ifooter';
 import Footer from './components/Footer';
 import './App.css';
 
+
 function App() {
   const [cart, setCart] = useState([]);
 
