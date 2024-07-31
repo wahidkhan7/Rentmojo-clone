@@ -18,3 +18,4 @@ This project is built by CodeBeaters (3 team members).
 5.  Redux
 6.  Chakra-Ui
 7.  JSON-Server
+8.  React-Slick
