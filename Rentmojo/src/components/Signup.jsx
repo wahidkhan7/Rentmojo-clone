@@ -1,12 +1,10 @@
-
-import React from 'react';
-import { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './LoginSignup.css';
 import cathappy from './img/cathappy.svg'; 
-import { Link, useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@chakra-ui/react';
 
-
-function Signup() {
+function Signup({ onClose }) { // Receive onClose as a prop
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phnno, setPhnno] = useState("");
@@ -84,83 +82,44 @@ function Signup() {
         });
         let data = await res.json();
         alert("Registered successfully");
-        navigate('./login');
+        if (onClose) onClose(); // Close the signup modal and open the login modal
       } catch (error) {
         console.error('Error registering user:', error);
-       
       }
     }
   };
-  function move(){
-    navigate('/')
-  }
- 
-  
 
   return (
-    
-    
     <div className="app">
       <div className="login-container">
         <div className="login-image">
-          <img src={cathappy} alt="Login Illustration" />
+          <img src={cathappy} alt="Signup Illustration" />
         </div>
         <div className="login-form">
           <h2>Sign up to your account!</h2>
           <form onSubmit={postData}>
-          
             <div className="form-group">
               <input type="text" placeholder="Enter your name*" onChange={(e) => setName(e.target.value)} />
-              {
-                valid? <></> : <span className='msgspan'>
-                 {errors.name}
-                 </span>
-               }
+              {!valid && <span className='msgspan'>{errors.name}</span>}
             </div>
-          
             <div className="form-group">
               <input type="email" placeholder="Enter your email*" onChange={(e) => setEmail(e.target.value)} />
-              {
-                valid? <></> : <span className='msgspan'>
-              {errors.email}
-               </span>
-              }
+              {!valid && <span className='msgspan'>{errors.email}</span>}
             </div>
-           
             <div className="form-group">
               <input type="text" placeholder="Enter your phone number*" onChange={(e) => setPhnno(e.target.value)} />
-              {
-             valid? <></> : <span className='msgspan'>
-              {errors.phnno}
-               </span>
-               }
+              {!valid && <span className='msgspan'>{errors.phnno}</span>}
             </div>
-           
             <div className="form-group">
               <input type="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)} />
-              {
-                     valid? <></> : <span className='msgspan' >
-                    {errors.password}
-                      </span>
-              }
+              {!valid && <span className='msgspan'>{errors.password}</span>}
             </div>
-         
-           
-            
-            <button>Continue</button>
-            <button onClick={move} >Continue as guest</button>
+            <button type='submit'>Continue</button>
           </form>
-          <p>Already a user? <a href="/login">Login</a></p>
         </div>
       </div>
     </div>
- 
-
-         
-    
   );
 }
 
 export default Signup;
-
-

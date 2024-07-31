@@ -1,39 +1,18 @@
-import React, { useEffect, useState } from 'react';
-// import './LoginSignup.css';
+import React, { useState } from 'react';
+import './LoginSignup.css';
 import cathappy from './img/cathappy.svg'; 
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@chakra-ui/react';
 
-
-
-function Login() {
+function Login({ onClose }) { // Receive onClose as a prop
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [formData, setFormData] = useState([]);
   const [errors, setErrors] = useState({});
   const [valid, setValid] = useState(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        let res = await fetch("http://localhost:3000/users");
-        if (!res.ok) {
-          throw new Error('Failed to fetch user data');
-        }
-        let data = await res.json();
-        setFormData(data);
-        console.log(data);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-        
-      }
-    }
-    fetchData();
-  }, []);
-
-  function check(event) {
-    event.preventDefault(); 
-
+  const postData = async (event) => {
+    event.preventDefault();
     let validationErrors = {};
     let isValid = true;
 
@@ -41,25 +20,33 @@ function Login() {
       isValid = false;
       validationErrors.email = "Email is required";
     }
+
     if (!password.trim()) {
       isValid = false;
       validationErrors.password = "Password is required";
     }
 
-    
-    const user = formData.find(u => u.email === email && u.password === password);
-    if (user) {
-      alert("Login Successful");
-      navigate('/');
-    } else {
-      isValid = false;
-      alert("Invalid email or password")
-      validationErrors.general = "";
-    }
-
     setErrors(validationErrors);
     setValid(isValid);
-  }
+
+    if (isValid) {
+      try {
+        let res = await fetch('http://localhost:3000/users');
+        let data = await res.json();
+        let user = data.find(user => user.email === email && user.password === password);
+        if (user) {
+          alert("Logged in successfully");
+          navigate('/'); // Redirect to homepage
+          if (onClose) onClose(); // Close the modal
+        } else {
+          setErrors({ login: "Invalid email or password" });
+          setValid(false);
+        }
+      } catch (error) {
+        console.error('Error logging in:', error);
+      }
+    }
+  };
 
   return (
     <div className="app">
@@ -69,27 +56,18 @@ function Login() {
         </div>
         <div className="login-form">
           <h2>Login to your account!</h2>
-          {valid ? <></> : <span>{errors.general}</span>}
-          <form onSubmit={check}>
+          <form onSubmit={postData}>
             <div className="form-group">
-              <input type="email" placeholder="Enter your email" onChange={(e) => setEmail(e.target.value)} />
-              {
-               valid? <></> :  <span className='msgspan'>
-                  {errors.email}
-                  </span>
-                }
+              <input type="email" placeholder="Enter your email*" onChange={(e) => setEmail(e.target.value)} />
+              {!valid && <span className='msgspan'>{errors.email}</span>}
             </div>
             <div className="form-group">
               <input type="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)} />
-              {
-                 valid? <></> : <span className='msgspan'>
-                   {errors.password}
-               </span>
-              }
+              {!valid && <span className='msgspan'>{errors.password}</span>}
             </div>
-            <button type="submit">Continue</button>
+            {errors.login && <span className='msgspan'>{errors.login}</span>}
+            <button type='submit'>Login</button>
           </form>
-          <p>Don't have an account? <a href="./Signup">Create one</a></p>
         </div>
       </div>
     </div>
